@@ -13,6 +13,26 @@
         <p>Manage student records easily</p>
     </header>
 
+    <!-- Student Login Form -->
+    <section class="login-section">
+        <h2>Student Login</h2>
+        <p>Login to access your account</p>
+
+        <form id="loginForm">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail"
+                   placeholder="Enter your email" required>
+
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword"
+                   placeholder="Enter your password"
+                   minlength="6" required>
+
+            <button type="submit">Login</button>
+            <p id="loginMessage" role="status"></p>
+        </form>
+    </section>
+
     <main class="container">
 
         <section class="form-section">
@@ -34,10 +54,10 @@
                 <label for="course">Course</label>
                 <select id="course" required>
                     <option value="">Select Course</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Information Technology">Information Technology</option>
-                    <option value="Cloud Computing">Cloud Computing</option>
-                    <option value="Data Science">Data Science</option>
+                    <option>Computer Science</option>
+                    <option>Information Technology</option>
+                    <option>Cloud Computing</option>
+                    <option>Data Science</option>
                 </select>
 
                 <button type="submit">Add Student</button>
@@ -58,7 +78,6 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-
                     <tbody id="studentList">
                         <tr>
                             <td colspan="5">No students added yet.</td>
@@ -71,36 +90,49 @@
     </main>
 
     <footer>
-        <p>Student Management Project | Git & GitHub Practical</p>
+        <p>Student Management Project | Git &amp; GitHub Practical</p>
     </footer>
 
     <script>
+        // Login form demo
+        document.getElementById("loginForm")
+            .addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const email = document.getElementById("loginEmail").value;
+
+                document.getElementById("loginMessage").textContent =
+                    "Login form submitted for " + email +
+                    ". Demo only — authentication is not configured.";
+            });
+
+        // Student management
         const form = document.getElementById("studentForm");
         const studentList = document.getElementById("studentList");
         const students = [];
 
         function displayStudents() {
-            studentList.innerHTML = "";
+            studentList.replaceChildren();
 
             if (students.length === 0) {
-                studentList.innerHTML =
-                    '<tr><td colspan="5">No students added yet.</td></tr>';
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                cell.colSpan = 5;
+                cell.textContent = "No students added yet.";
+                row.appendChild(cell);
+                studentList.appendChild(row);
                 return;
             }
 
             students.forEach((student, index) => {
                 const row = document.createElement("tr");
 
-                [
-                    student.roll,
-                    student.name,
-                    student.email,
-                    student.course
-                ].forEach(value => {
-                    const cell = document.createElement("td");
-                    cell.textContent = value;
-                    row.appendChild(cell);
-                });
+                [student.roll, student.name, student.email, student.course]
+                    .forEach(value => {
+                        const cell = document.createElement("td");
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                    });
 
                 const actionCell = document.createElement("td");
                 const deleteButton = document.createElement("button");
