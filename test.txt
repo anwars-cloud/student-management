@@ -1,4 +1,3 @@
 testedokk
 well good
-contact
-
+this is my contact test
