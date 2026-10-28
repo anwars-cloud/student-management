@@ -1,3 +1,5 @@
 testedokk
 well good
 its my master test
+this is my contact test
+
